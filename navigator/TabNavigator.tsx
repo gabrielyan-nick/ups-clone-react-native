@@ -14,42 +14,37 @@ const Tab = createBottomTabNavigator<TabStackParamList>();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: "#00484b",
+        tabBarInactiveTintColor: "#868686",
         tabBarStyle: { backgroundColor: "#e3ffe6" },
         tabBarItemStyle: {
           padding: 5,
         },
-        tabBarActiveTintColor: "#00484b",
-        tabBarInactiveTintColor: "#868686",
         tabBarLabelStyle: { fontWeight: "bold" },
-      }}
+        tabBarIcon: ({ color, focused, size }) => {
+          if (route.name === "Customers") {
+            return (
+              <Icon
+                name="users"
+                size={20}
+                color={focused ? "#00484b" : "#868686"}
+              />
+            );
+          } else if (route.name === "Orders") {
+            return (
+              <Icon
+                name="boxes"
+                size={20}
+                color={focused ? "#00484b" : "#868686"}
+              />
+            );
+          }
+        },
+      })}
     >
-      <Tab.Screen
-        name="Customers"
-        component={CustomersScreen}
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name="users"
-              size={20}
-              color={focused ? "#00484b" : "#868686"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Orders"
-        component={OrdersScreen}
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name="boxes"
-              size={20}
-              color={focused ? "#00484b" : "#868686"}
-            />
-          ),
-        }}
-      />
+      <Tab.Screen name="Customers" component={CustomersScreen} />
+      <Tab.Screen name="Orders" component={OrdersScreen} />
     </Tab.Navigator>
   );
 };
